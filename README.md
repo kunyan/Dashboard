@@ -2,11 +2,11 @@ Dashboard
 =========
 
 ##API
-Spring
-MySQL
+* Spring
+* MySQL
 
 ##Front-End
-Angular
-Grunt
-Bower
-Bootstrap
+* Angular
+* Grunt
+* Bower
+* Bootstrap
