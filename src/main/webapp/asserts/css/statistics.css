@@ -1,0 +1,9 @@
+.sidenav .active > a,
+.sidenav .active:hover > a,
+.sidenav .active:focus > a {
+  font-weight: bold;
+  font-size:18px;
+  color: #000;
+  background-color: transparent;
+}
+

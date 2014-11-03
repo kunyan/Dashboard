@@ -1,0 +1,100 @@
+header > div{
+    border-bottom: 1px solid #eee;
+}
+.tc{
+	text-align:center;
+}
+.red {
+    color:#F5584A !important;
+}
+
+#stats table{
+	margin-bottom:0;
+}
+#remark{
+	font-size:10px;
+	text-align:left;
+}
+#remark p{
+	line-height:150%;
+}
+.panel {
+	margin-bottom: 5px;
+}
+.table {
+	margin-bottom: 0;
+}
+.number{
+    font-size:22px !important;
+    margin:0 4px;
+    color: #444;
+    font-weight:bold;
+    font-family: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
+}
+.navbar {
+    margin-bottom: 10px;
+}
+.navbar .navbar-toggle .icon-bar {
+    background-color: #563d7c;
+}
+.col-md-2, .col-md-3,.col-md-4,.col-md-6, .col-md-6, .col-md-12 {
+	padding-right: 5px;
+	padding-left: 5px;
+}
+.row{
+	margin:0 -5px;
+}
+
+.panel-default>.panel-heading {
+    background-color:#478AC5;
+    color:#fff;
+}
+
+.panel-heading {
+    padding: 6px 12px;
+}
+.panel-body {
+    padding: 5px;
+	text-align:center;
+}
+
+#moneyTable th img {
+    width:60px;
+    height:50px;
+}
+#moneyTable th{
+    font-size:12px;
+    text-align:center;
+    border: 0;
+    background-color:#fff;
+    position:relative;
+    padding: 0;
+}
+#moneyTable td{
+    font-size:14px;
+    padding: 2px 0;
+}
+
+img.coin {
+    position:absolute;
+    top:-45px;
+    left:48%;
+    right:10px;
+    display:none;
+    z-index:9999;
+    width:25px !important;
+    height:25px !important;
+}
+
+.solar-panel {
+padding: 10px;
+height: auto;
+width: auto;
+max-width: 100%;
+background-color: none;
+}
+.solar-panel img {
+	height:100%;
+	width:100%;
+	vertical-align: middle;
+}

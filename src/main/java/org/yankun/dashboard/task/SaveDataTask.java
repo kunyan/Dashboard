@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component("saveDataTask") 
 public class SaveDataTask {
-	@Scheduled(cron = "0-59 * * * * ?")  
+	@Scheduled(cron = "* 1 * * * ?")  
     public void testJob() {  
         System.out.println("this is a test");  
     }
