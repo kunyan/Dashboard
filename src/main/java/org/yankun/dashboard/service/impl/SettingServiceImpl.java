@@ -16,12 +16,6 @@ public class SettingServiceImpl implements SettingService {
 	
 	@Autowired
 	private BaseDao dao;
-//	@Autowired
-//	private JdbcTemplate jdbcTemplate;
-//	
-//	public SettingServiceImpl(JdbcTemplate jdbcTemplate) {
-//		this.jdbcTemplate = jdbcTemplate;
-//	}
 	
 
 	@Override
@@ -32,7 +26,7 @@ public class SettingServiceImpl implements SettingService {
 
 	@Override
 	public List<PowerDefault> getPowerDefaults() {
-		String sql = "select * from setting_power";
+		String sql = "select * from setting_power_tbl";
 		return dao.query(sql,new BeanPropertyRowMapper<PowerDefault>(PowerDefault.class));
 	}
 

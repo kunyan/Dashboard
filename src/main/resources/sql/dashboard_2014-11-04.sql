@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.6.21)
 # Database: dashboard
-# Generation Time: 2014-11-03 16:22:21 +0000
+# Generation Time: 2014-11-04 15:43:03 +0000
 # ************************************************************
 
 
@@ -20,22 +20,50 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
-# Dump of table setting_power
+# Dump of table power_data_tbl
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `setting_power`;
+DROP TABLE IF EXISTS `power_data_tbl`;
 
-CREATE TABLE `setting_power` (
+CREATE TABLE `power_data_tbl` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `powerTime` datetime DEFAULT NULL,
+  `power` double DEFAULT NULL,
+  `saveC` double DEFAULT NULL,
+  `saveCO2` double DEFAULT NULL,
+  `income` double DEFAULT NULL,
+  `saveIncome` double DEFAULT NULL,
+  `restIncome` double DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `power_data_tbl` WRITE;
+/*!40000 ALTER TABLE `power_data_tbl` DISABLE KEYS */;
+
+INSERT INTO `power_data_tbl` (`id`, `powerTime`, `power`, `saveC`, `saveCO2`, `income`, `saveIncome`, `restIncome`)
+VALUES
+	(1,'2014-11-04 23:42:00',12,13,14,15,16,17);
+
+/*!40000 ALTER TABLE `power_data_tbl` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table setting_power_tbl
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `setting_power_tbl`;
+
+CREATE TABLE `setting_power_tbl` (
   `hour` int(11) unsigned NOT NULL,
   `sunHeight` int(11) DEFAULT NULL,
   `power` double DEFAULT NULL,
   PRIMARY KEY (`hour`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `setting_power` WRITE;
-/*!40000 ALTER TABLE `setting_power` DISABLE KEYS */;
+LOCK TABLES `setting_power_tbl` WRITE;
+/*!40000 ALTER TABLE `setting_power_tbl` DISABLE KEYS */;
 
-INSERT INTO `setting_power` (`hour`, `sunHeight`, `power`)
+INSERT INTO `setting_power_tbl` (`hour`, `sunHeight`, `power`)
 VALUES
 	(0,0,0),
 	(1,0,0),
@@ -62,7 +90,7 @@ VALUES
 	(22,0,0),
 	(23,0,0);
 
-/*!40000 ALTER TABLE `setting_power` ENABLE KEYS */;
+/*!40000 ALTER TABLE `setting_power_tbl` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
