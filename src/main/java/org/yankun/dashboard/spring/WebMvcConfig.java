@@ -13,6 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -20,6 +21,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.accept.ContentNegotiationStrategy;
 import org.springframework.web.accept.PathExtensionContentNegotiationStrategy;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -38,7 +40,8 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableScheduling
 @Configuration
 @PropertySources({
-    @PropertySource("classpath:/properties/database.properties")
+    @PropertySource("classpath:/properties/database.properties"),
+    @PropertySource("classpath:/properties/weather.properties")
 })
 @ComponentScan(basePackages = { "org.yankun.dashboard" })
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
@@ -49,6 +52,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/asserts/**").addResourceLocations("/asserts/");
+	}
+	
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {
+	    return new PropertySourcesPlaceholderConfigurer();
 	}
 	
 	@Bean
@@ -74,6 +82,17 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	    dataSource.setUsername(env.getProperty("database.username"));
 	    dataSource.setPassword(env.getProperty("database.password"));
 	    return dataSource;
+	}
+	
+	@Bean
+	public RestTemplate restTemplate() {
+	    RestTemplate restTemplate = new RestTemplate();
+//	    List<HttpMessageConverter<?>> converters = new ArrayList<HttpMessageConverter<?>>();
+//
+//	    converters.add(marshallingMessageConverter());
+//	    restTemplate.setMessageConverters(converters);
+
+	    return restTemplate;
 	}
 	
 	

@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.yankun.dashboard.model.setting.PowerDefault;
+import org.yankun.dashboard.model.weather.Weather;
 import org.yankun.dashboard.service.SettingService;
+import org.yankun.dashboard.service.WeatherService;
 
 /**
  * 
@@ -23,6 +25,9 @@ public class SettingController {
 	@Autowired
 	private SettingService settingService;
 	
+	@Autowired
+	private WeatherService weatherService;
+	
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ModelAndView index(ModelMap model) {
 		
@@ -32,7 +37,14 @@ public class SettingController {
 
 	@RequestMapping(value = "/power", method = RequestMethod.GET)
 	public List<PowerDefault> getPowerDefaults() {
-		return settingService.getPowerDefaults();
+		Weather weather = weatherService.getWeather();
+		Double weatherRate = (double) (settingService.getWeatherRate(weather) / 100);
+		List<PowerDefault> list = settingService.getPowerDefaults();
+		
+		for (PowerDefault pd : list) {
+			pd.setPower(pd.getPower() * weatherRate);
+		}
+		return list;
 	}
 	
 	@RequestMapping(value = "/power/{hour}", method = RequestMethod.PUT)

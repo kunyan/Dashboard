@@ -88,8 +88,6 @@
 				<div class="form-group">
 					<a href="javascript:void(0)" id="search" class="btn btn-primary">数据查询</a>
 				</div>
-			  </div>
-			  
 			</form>
 			<br>
 			<div class="table-responsive">

@@ -242,11 +242,7 @@
                                 </div>
                                 <div id="saveCO" class="panel-collapse collapse in">
                                     <div class="panel-body">
-                                        <p>
-                                            <h5>
-                                                今日 Today
-                                            </h5>
-                                        </p>
+                                        <p><h5>今日 Today</h5></p>
                                         <p class="tc">
                                             <span id="todaySaveCoal" class="number">
                                                 0
