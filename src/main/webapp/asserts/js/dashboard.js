@@ -11,7 +11,19 @@ var todayIncrease,
     barChart,
     careerSaveCO2,
     hour,
+    dataConfig,
     chartData = [];
+
+var data = {
+	weater: null,
+	careerTotalPower: 0,
+    thisYearTotalPower: 0,
+    lastMonthTotalPower: 0,
+    lastWeekTotalPower: 0,
+    yesterdayTotalPower: 0,
+    todayTotalPower: 0,
+    sunPowerData: null
+}
 
 
 function showRealTimeGauge() {
@@ -57,13 +69,25 @@ function showConsumeGauge() {
         glow: true,
         units: 'Kw/h',
         title: false,
-        minValue: sysConfig.consumptionGuageConfig.minValue,
-        maxValue: sysConfig.consumptionGuageConfig.maxValue,
-        majorTicks: ['0','5','10','15','20','25'],
+        minValue: 0,
+        maxValue: data.sunPowerData.length * 3,
+        majorTicks: ['0','5','10','15','20','25', '30'],
         minorTicks: false,
         strokeTicks: false,
         valueFormat: sysConfig.consumptionGuageConfig.valueFormat,
-        highlights: sysConfig.consumptionGuageConfig.highlights,
+        highlights: [{ //区域及颜色设置
+            from: 0,
+            to: 10,
+            color: '#7A9B00'
+        }, {
+            from: 10,
+            to: 20,
+            color: '#F8C538'
+        }, {
+            from: 20,
+            to: data.sunPowerData.length * 3,
+            color: '#F5584A'
+        }],
         colors: {
             plate: '#fff',
             majorTicks: '#614d0e',
@@ -106,124 +130,108 @@ function getIncrease() {
         seconds = now.getSeconds();
 
     var increase = 0;
-    for (var i = 0; i < chartData.length; i++) {
-        increase = increase + chartData[i].power;
-        if (hour == chartData[i].hour) { //当前小时符合数据小时
-            if ((i + 1) < chartData.length) { //当前数据不是最后一个
-                increase = increase + chartData[i + 1].power / 3600 * (seconds + minutes * 60);
+    for (var i = 0; i < data.sunPowerData.length; i++) {
+        if (hour == data.sunPowerData[i].hour) { //当前小时符合数据小时
+            if ((i + 1) < data.sunPowerData.length) { //当前数据不是最后一个
+                increase = increase + data.sunPowerData[i + 1].power / 3600 * (seconds + minutes * 60);
             }
             break;
         }
     }
-    return increase * sysConfig.weather;
+    return increase;
 }
-
+//节约煤炭
 function getSaveCoal(val) {
     return val * 0.4;
 }
-
+//节约二氧化碳
 function getSaveCO2(val) {
     return val * 0.96;
 }
-
-function getTodaySubsidies(val){
+//发电补贴收入
+function getSubsidies(val){
     return val * 0.42;
 }
+//今日用电
 function getUsedToday(){
-    var now = new Date(),
-        hour = now.getHours(),
-        minutes = now.getMinutes(),
-        seconds = now.getSeconds(),
-        used = 0;
-        
-        if (hour >= (dataConfig.consumeStartTimeHour + 8)) {
-            if (hour == (dataConfig.consumeStartTimeHour + 8) && minutes > dataConfig.consumeStartTimeMinutes) {
-                return 3 * 8;
-            } else if (hour > (dataConfig.consumeStartTimeHour + 8)){
-                return 3 * 8;
-            }
-        } else if (hour >= dataConfig.consumeStartTimeHour && hour <= (dataConfig.consumeStartTimeHour + 8)) {
-            var flag = true;
-            if(hour == dataConfig.consumeStartTimeHour && minutes <= dataConfig.consumeStartTimeMinutes) {
-                flag = false;
-            } else if (hour == (dataConfig.consumeStartTimeHour + 8) && minutes >= dataConfig.consumeStartTimeMinutes) {
-                flag = false;
-            }
-            
-            
-            if (flag) {
-                used = (hour - dataConfig.consumeStartTimeHour) * 3 + seconds * (3/3600);
-                if (minutes > dataConfig.consumeStartTimeMinutes) {
-                    used = used + (minutes - dataConfig.consumeStartTimeMinutes) * (3/60)
-                }
-                
-            }
-            return used;
-            
-        }
-        return used;
+	
+	var now = new Date(),
+		msStartDiff = now.getTime() - new Date(data.weather.sunRiseTime).getTime(),
+		msEndDiff = now.getTime() - new Date(data.weather.sunDownTime).getTime();
+	if (msStartDiff >= 0) {
+		if (msEndDiff <= 0) {
+			return (msStartDiff / 1000) * (3/60/60);
+		}else {
+			return data.todayTotal.used;
+		}
+		
+	}
+	return 0;
 }
-function getTodaySaveIncome(val) {
+//用电节约收入
+function getSaveIncome(val) {
     return val;
 }
-
-function getTodaySurplusIncome(increase, consumption){
-    return (increase - consumption) * 0.4;
+//余电上网收入
+function getSurplusIncome(power, used){
+    return (power - used) > 0 ? (power - used) * 0.4 : 0;
 }
 function render() {
     var increase = getIncrease();
     //统计部分
-    $("#todayTotal").text(toDecimal2(increase));
-    $("#thisYearTotal").text(toDecimal2(dataConfig.thisYearTotal + increase));
-    $("#careerTotal").text(toDecimal2(dataConfig.careerTotal + increase));
+    $("#todayTotalPower").text(toDecimal2(data.todayTotal.power + increase));
+    $("#thisYearTotalPower").text(toDecimal2(data.thisYearTotal.power  + increase));
+    $("#careerTotalPower").text(toDecimal2(data.careerTotal.power + increase));
 
     //节约部分
-    $("#todaySaveCoal").text(toDecimal2(getSaveCoal(increase)));
-    $("#careerSaveCoal").text(toDecimal2(getSaveCoal(dataConfig.careerTotal + increase)));
-    $("#todaySaveCO2").text(toDecimal2(getSaveCO2(increase)));
-    $("#careerSaveCO2").text(toDecimal2(getSaveCO2(dataConfig.careerTotal + increase)));
+    $("#todaySaveCoal").text(toDecimal2(getSaveCoal(data.todayTotal.power + increase)));
+    $("#careerSaveCoal").text(toDecimal2(getSaveCoal(data.careerTotal.power + increase)));
+    $("#todaySaveCO2").text(toDecimal2(getSaveCO2(data.todayTotal.power + increase)));
+    $("#careerSaveCO2").text(toDecimal2(getSaveCO2(data.careerTotal.power + increase)));
     
     
-    $(".todaySubsidies").text(toDecimal2(getTodaySubsidies(increase)));
-    $(".todaySubsidies").val(toDecimal2(getTodaySubsidies(increase)));
-    $(".todaySaveIncome").text(toDecimal2(getTodaySaveIncome(getUsedToday())));
-    $(".todaySaveIncome").val(toDecimal2(getTodaySaveIncome(getUsedToday())));
-    $(".todaySurplusIncome").text(toDecimal2(getTodaySurplusIncome(increase, getUsedToday())));
-    $(".todaySurplusIncome").val(toDecimal2(getTodaySurplusIncome(increase, getUsedToday())));
+    $(".todaySubsidies").text(toDecimal2(getSubsidies(data.todayTotal.power + increase)));
+    $(".todaySubsidies").val(toDecimal2(getSubsidies(data.todayTotal.power + increase)));
+    $(".todaySaveIncome").text(toDecimal2(getSaveIncome(getUsedToday())));
+    $(".todaySaveIncome").val(toDecimal2(getSaveIncome(getUsedToday())));
+    $(".todaySurplusIncome").text(toDecimal2(getSurplusIncome(data.todayTotal.power + increase, getUsedToday())));
+    $(".todaySurplusIncome").val(toDecimal2(getSurplusIncome(data.todayTotal.power +increase, getUsedToday())));
     $(".todayIncomeTotal").text(toDecimal2(Number($(".todaySubsidies").val()) + Number($(".todaySaveIncome").val()) + Number($(".todaySurplusIncome").val())));
     
     
     
     
-    $("#careerSubsidies").text(toDecimal2(getTodaySubsidies(dataConfig.careerTotal + increase)));
-    $("#careerSaveIncome").text(toDecimal2(getTodaySaveIncome(getUsedToday()) + dataConfig.careerSaveIncome));
-    $("#careerSurplusIncome").text(toDecimal2(((dataConfig.careerTotal + increase) - Number(dataConfig.careerSaveIncome))*0.4));
+    $("#careerSubsidies").text(toDecimal2(getSubsidies(data.careerTotal.power + increase)));
+    $("#careerSaveIncome").text(toDecimal2(getSaveIncome(getUsedToday()) + data.careerTotal.used));
+    $("#careerSurplusIncome").text(toDecimal2(getSurplusIncome((data.careerTotal.power + increase) , (data.careerTotal.used + getUsedToday()))));
     $(".careerIncomeTotal").text(toDecimal2(Number($("#careerSubsidies").text()) + Number($("#careerSaveIncome").text()) + Number($("#careerSurplusIncome").text())));
 
-    $("img.pig").next("img").show().animate({
-        top:"-5px"
-    }, 1000, function(){
-        $(this).hide();
-        $(this).css({"top":"-45px"});
-    });
+    if (isSunExsits()){
+    	$("img.pig").next("img").show().animate({
+            top:"-5px"
+        }, 1000, function(){
+            $(this).hide();
+            $(this).css({"top":"-45px"});
+        });
+    }
+    
 }
 
 
 $(document).ready(function(){
-	$.getJSON("/setting/power.json",function(data){
-		chartData = eval(data);
-		
-		$("#systemTotal").text(dataConfig.systemTotal);
-	    $("#yesterday").text(dataConfig.yesterday);
-	    $("#lastWeek").text(dataConfig.lastWeek);
-	    $("#lastMonth").text(dataConfig.lastMonth);
+	$.getJSON("/api/data.json",function(response){
+		data = eval(response);
+		$("#systemTotal").text(10);
+	    $("#yesterdayTotalPower").text(data.yesterdayTotal.power);
+	    $("#lastWeekTotalPower").text(data.lastWeekTotal.power);
+	    $("#lastMonthTotalPower").text(data.lastMonthTotal.power);
+	    chart(refreshCharData());
 	    realTimeGauge = showRealTimeGauge();
 	    consumeGauge = showConsumeGauge();
 	    refresh();
 	    render();
-	    chart(refreshCharData());
+	    
 	    setWeather();
-		
 	});
 	
     
@@ -260,23 +268,23 @@ function refreshCharData(){
 
     }
     
-    if (hour < chartData[0].hour) {
-        for (var i = 0; i < chartData.length; i++) {
-            if (chartData[i].power != 0) {
-                barChartData.labels.push(chartData[i].hour + "时");
+    if (hour < data.sunPowerData[0].hour) {
+        for (var i = 0; i < data.sunPowerData.length; i++) {
+            if (data.sunPowerData[i].power != 0) {
+                barChartData.labels.push(data.sunPowerData[i].hour + "时");
                 barChartData.datasets[0].data.push(0);
             }
         }
     }
     
-    if (hour >= chartData[0].hour) {
-        for (var i = 0; i < chartData.length; i++) {
-            if (chartData[i].power != 0) {
-                if (chartData[i].hour <= hour) {
-                    barChartData.labels.push(chartData[i].hour + "时");
-                    barChartData.datasets[0].data.push(chartData[i].sunHeight);
+    if (hour >= data.sunPowerData[0].hour) {
+        for (var i = 0; i < data.sunPowerData.length; i++) {
+            if (data.sunPowerData[i].power != 0) {
+                if (data.sunPowerData[i].hour <= hour) {
+                    barChartData.labels.push(data.sunPowerData[i].hour + "时");
+                    barChartData.datasets[0].data.push(data.sunPowerData[i].sunHeight);
                 } else {
-                    barChartData.labels.push(chartData[i].hour + "时");
+                    barChartData.labels.push(data.sunPowerData[i].hour + "时");
                     barChartData.datasets[0].data.push(0);
                 }
             }
@@ -302,10 +310,14 @@ function toDecimal2(x) {
     return s;
 }
 
+function isSunExsits() {
+	var now = new Date();
+	return now >= new Date(data.weather.sunRiseTime) && now <= new Date(data.weather.sunDownTime)
+}
 
 function refresh() {
     setInterval(function() {
-        render();
+    	isSunExsits() ? render(): 0;
     }, sysConfig.textRefreshTime * 1000);
     
     //刷新仪表盘
@@ -316,13 +328,13 @@ function refresh() {
             seconds = now.getSeconds();
         
         var  current = 0; 
-        for (var i = 0; i < chartData.length; i++) {
+        for (var i = 0; i < data.sunPowerData.length; i++) {
             
-            if (chartData[i].power != 0) {
-                if (hour == chartData[i].hour) { //当前小时符合数据小时
-                    current = chartData[i].power;
-                    if ((i + 1) <= chartData.length) { //当前数据不是最后一个
-                        current = current + (chartData[i + 1].power - chartData[i].power) / 3600 * (seconds + minutes * 60);
+            if (data.sunPowerData[i].power != 0) {
+                if (hour == data.sunPowerData[i].hour) { //当前小时符合数据小时
+                    current = data.sunPowerData[i].power;
+                    if ((i + 1) <= data.sunPowerData.length) { //当前数据不是最后一个
+                        current = current + (data.sunPowerData[i + 1].power - data.sunPowerData[i].power) / 3600 * (seconds + minutes * 60);
                     
                     }
                     realTimeGauge.setValue(Math.random() * ((current - 0.02) - (current + 0.02)) + (current - 0.02));

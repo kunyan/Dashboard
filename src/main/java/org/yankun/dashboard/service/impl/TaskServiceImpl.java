@@ -1,5 +1,7 @@
 package org.yankun.dashboard.service.impl;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,16 +18,12 @@ public class TaskServiceImpl implements TaskService {
 	
 	@Override
 	public void saveData(Data data) {
-		String sql = "insert into power_data_tbl(powerTime, power, saveC, saveCO2, income, saveIncome, restIncome) "
-				+ "values(?,?,?,?,?,?,?)";
+		String sql = "insert into power_data_tbl(createDateTime, power, used) "
+				+ "values(?,?,?)";
 		dao.update(sql, new Object[]{
-				data.getPowerTime(),
+				new Date(),
 				data.getPower(),
-				data.getSaveC(),
-				data.getSaveCO2(),
-				data.getIncome(),
-				data.getSaveIncome(),
-				data.getRestIncome()});
+				data.getUsed()});
 
 	}
 

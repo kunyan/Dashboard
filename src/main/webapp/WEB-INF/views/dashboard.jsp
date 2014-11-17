@@ -156,7 +156,7 @@
                                                 <th>
                                                     今日总发电量：
                                                 </th>
-                                                <td id="todayTotal" class="">
+                                                <td id="todayTotalPower" class="">
                                                     0
                                                 </td>
                                                 <td>
@@ -167,7 +167,7 @@
                                                 <th>
                                                     今年总发电量：
                                                 </th>
-                                                <td id="thisYearTotal" class="">
+                                                <td id="thisYearTotalPower" class="">
                                                     0
                                                 </td>
                                                 <td>
@@ -178,7 +178,7 @@
                                                 <th>
                                                     生涯总发电量：
                                                 </th>
-                                                <td id="careerTotal" class="">
+                                                <td id="careerTotalPower" class="">
                                                     0
                                                 </td>
                                                 <td>
@@ -495,7 +495,7 @@
                                 </div>
                                 <div id="saveCO2" class="panel-collapse collapse in">
                                     <div class="panel-body">
-                                        <p id="yesterday" class="number">
+                                        <p id="yesterdayTotalPower" class="number">
                                             0
                                         </p>
                                     </div>
@@ -513,7 +513,7 @@
                                 </div>
                                 <div id="saveCO2" class="panel-collapse collapse in">
                                     <div class="panel-body">
-                                        <p id="lastWeek" class="number">
+                                        <p id="lastWeekTotalPower" class="number">
                                             0
                                         </p>
                                     </div>
@@ -531,7 +531,7 @@
                                 </div>
                                 <div id="saveCO2" class="panel-collapse collapse in">
                                     <div class="panel-body">
-                                        <p id="lastMonth" class="number">
+                                        <p id="lastMonthTotalPower" class="number">
                                             0
                                         </p>
                                     </div>
@@ -568,8 +568,6 @@
         <script src="asserts/js/lib/Chart.min.js">
         </script>
         <script src="asserts/js/sys_config.js">
-        </script>
-        <script src="asserts/js/data_config.js">
         </script>
         <script src="asserts/js/dashboard.js">
         </script>

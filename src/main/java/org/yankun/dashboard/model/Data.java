@@ -12,19 +12,21 @@ public class Data implements Serializable {
 
 	private long id;
 	
-	private Date powerTime;
+	private Date createDateTime;
 	
 	private double power;
 	
-	private double saveC;
+	private double used;
+	
+	private double saveCoal;
 	
 	private double saveCO2;
 	
-	private double income;
+	private double subsidies;
 	
 	private double saveIncome;
 	
-	private double restIncome;
+	private double surplusIncome;
 
 	public long getId() {
 		return id;
@@ -34,12 +36,12 @@ public class Data implements Serializable {
 		this.id = id;
 	}
 
-	public Date getPowerTime() {
-		return powerTime;
+	public Date getCreateDateTime() {
+		return createDateTime;
 	}
 
-	public void setPowerTime(Date powerTime) {
-		this.powerTime = powerTime;
+	public void setCreateDateTime(Date createDateTime) {
+		this.createDateTime = createDateTime;
 	}
 
 	public double getPower() {
@@ -50,46 +52,32 @@ public class Data implements Serializable {
 		this.power = power;
 	}
 
-	public double getSaveC() {
-		return saveC;
+	public double getUsed() {
+		return used;
 	}
 
-	public void setSaveC(double saveC) {
-		this.saveC = saveC;
+	public void setUsed(double used) {
+		this.used = used;
+	}
+
+	public double getSaveCoal() {
+		return this.power * 0.4;
 	}
 
 	public double getSaveCO2() {
-		return saveCO2;
+		return this.power * 0.96;
 	}
 
-	public void setSaveCO2(double saveCO2) {
-		this.saveCO2 = saveCO2;
-	}
-
-	public double getIncome() {
-		return income;
-	}
-
-	public void setIncome(double income) {
-		this.income = income;
+	public double getSubsidies() {
+		return this.power * 0.42;
 	}
 
 	public double getSaveIncome() {
-		return saveIncome;
+		return this.used;
 	}
 
-	public void setSaveIncome(double saveIncome) {
-		this.saveIncome = saveIncome;
+	public double getSurplusIncome() {
+		return (this.power - this.used) > 0 ? (this.power - this.used) * 0.4 : 0;
 	}
-
-	public double getRestIncome() {
-		return restIncome;
-	}
-
-	public void setRestIncome(double restIncome) {
-		this.restIncome = restIncome;
-	}
-	
-	
 	
 }

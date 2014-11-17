@@ -5,5 +5,5 @@ import org.yankun.dashboard.model.weather.Weather;
 public interface WeatherService {
 	Weather getWeather();
 	
-	int getWeatherRate();
+	int getWeatherRate(Weather weather);
 }
