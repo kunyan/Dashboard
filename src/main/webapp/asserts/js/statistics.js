@@ -28,6 +28,21 @@
 //
 //     return barChartData;
 // }
+Date.prototype.Format = function (fmt) { //author: meizz 
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
 
 $(document).ready(function(){
     // chart('chartPower', refreshCharData('日', dataConfig.powerDay));
@@ -46,20 +61,28 @@ $(document).ready(function(){
 	//   })
 	
 	$('#searchToday').click(function(){
-		createTable("时", dataConfig.todayData);
+		$("#startDate").val(new Date().Format("yyyy-MM-dd"));
+		$("#endDate").val(new Date().Format("yyyy-MM-dd"));
+		$("#form").submit();
 	});
 	
 	$('#searchMonth').click(function(){
-		createTable("日", dataConfig.monthData);
+		$("#startDate").val(getCurrentMonthFirstDay().Format("yyyy-MM-dd"));
+		$("#endDate").val(getCurrentMonthLastDay().Format("yyyy-MM-dd"));
+		$("#form").submit();
 	});
 	
 	$('#searchYear').click(function(){
-		createTable("月", dataConfig.yearData);
+		$("#startDate").val(getCurrentYearFirstDay().Format("yyyy-MM-dd"));
+		console.log(getCurrentYearFirstDay().Format("yyyy-MM-dd"));
+		$("#endDate").val(getCurrentYearLastDay().Format("yyyy-MM-dd"));
+		$("#form").submit();
 	});
 	$('#search').click(function(){
 		if ($('#startDate').val() != ""){
 			if ($('#endDate').val() != "") {
-				createTable("月", dataConfig.yearData);
+				$("#form").submit();
+//				createTable("月", dataConfig.yearData);
 				
 			} else {
 				alert("截止日期不可为空");
@@ -109,6 +132,27 @@ function clean() {
 	
 }
 
+
+
+function getCurrentMonthLastDay() {
+	var now = new Date();	
+	return new Date(now.getFullYear(), now.getMonth() + 1, 0);
+}
+
+function getCurrentMonthFirstDay() {
+	var now = new Date();	
+	return new Date(now.getFullYear(), now.getMonth(), 1);
+}
+
+function getCurrentYearLastDay() {
+	var now = new Date();	
+	return new Date(now.getFullYear(), 11, 31);
+}
+
+function getCurrentYearFirstDay() {
+	var now = new Date();	
+	return new Date(now.getFullYear(), 0, 1);
+}
 
 $(document).ready(function(){
 	// $("table").children("thead").find("td,th").each(function(){

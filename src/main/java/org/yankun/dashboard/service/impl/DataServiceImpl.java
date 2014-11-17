@@ -61,16 +61,75 @@ public class DataServiceImpl implements DataService {
 	
 	@Override
 	public List<Data> getDataListByDatePeriod(Date startDate, Date endDate){
+		List<Data> list = new ArrayList<Data>();
 		try {
-			String sql = "select createDateTime , power, used from power_data_tbl where createDateTime between ? and ? ";
+			StringBuilder sb = new StringBuilder();
+			sb.append(" select ");
+			sb.append(" DATE(createDateTime) ");
+			sb.append(" as createDateTime, ");
+			sb.append(" SUM(power) as power, ");
+			sb.append(" SUM(used) as used ");
+			sb.append(" from power_data_tbl ");
+			sb.append(" where DATE(createDateTime) between DATE(?) and DATE(?)  ");
+			sb.append(" group by ");
+			sb.append(" DATE(createDateTime)  ");
 			
-			return dao.query(
+			
+			
+			String sql = sb.toString();
+			System.err.println(sql);
+			list = dao.query(
 					sql, new Object[] { startDate, endDate }, 
 					new BeanPropertyRowMapper<Data>(Data.class));
+			
+			for (Data data : list) {
+				data.setPowerHour(this.getPowerHour(data.getCreateDateTime()));
+				data.setAvgPower(this.getAvgPowerByDate(data.getCreateDateTime()));
+				data.setPowerMaxDateTime(this.getMaxPowerDateTimeByDate(data.getCreateDateTime()));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new ArrayList<Data>();
+		return list;
 	}
 	
+	private Date getMaxPowerDateTimeByDate(Date date) {
+		String sql = "select createDateTime,max(power) from power_data_tbl where DATE(createDateTime) = DATE(?)";
+		try {
+			Data data =  dao.queryForObject(
+					sql, new Object[] { date }, 
+					new BeanPropertyRowMapper<Data>(Data.class));
+			
+			return data.getCreateDateTime();
+		} catch (Exception e) {
+		}
+		return null;
+	}
+	
+	private Double getAvgPowerByDate(Date date) {
+		Double avg = new Double(0);
+		String sql = "select avg(power) as avgPower from power_data_tbl where DATE(createDateTime) = DATE(?)";
+		try {
+			avg = dao.queryForObject(
+					sql, new Object[] { date }, 
+					Double.class);
+		} catch (Exception e) {
+		}
+		System.err.println("Avg:" + avg);
+		return avg;
+	}
+	
+	private int getPowerHour(Date date) {
+		int power = 0;
+		String sql = "select count(power) from power_data_tbl where DATE(createDateTime) = DATE(?)";
+		try {
+			power = dao.queryForObject(
+					sql, new Object[] { date }, 
+					Integer.class);
+		} catch (Exception e) {
+		}
+		
+		System.err.println("Power:" + power);
+		return power;
+	}
 }

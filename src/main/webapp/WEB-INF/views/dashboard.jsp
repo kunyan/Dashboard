@@ -488,12 +488,12 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#saveCO2">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#yesterDayPower">
                                             昨日累计发电量(度)
                                         </a>
                                     </h4>
                                 </div>
-                                <div id="saveCO2" class="panel-collapse collapse in">
+                                <div id="yesterDayPower" class="panel-collapse collapse in">
                                     <div class="panel-body">
                                         <p id="yesterdayTotalPower" class="number">
                                             0
@@ -506,12 +506,12 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#saveCO2">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#lastWeekPower">
                                             上周累计发电量(度)
                                         </a>
                                     </h4>
                                 </div>
-                                <div id="saveCO2" class="panel-collapse collapse in">
+                                <div id="lastWeekPower" class="panel-collapse collapse in">
                                     <div class="panel-body">
                                         <p id="lastWeekTotalPower" class="number">
                                             0
@@ -524,12 +524,12 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#saveCO2">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#lastMonthPower">
                                             上月累计发电量(度)
                                         </a>
                                     </h4>
                                 </div>
-                                <div id="saveCO2" class="panel-collapse collapse in">
+                                <div id="lastMonthPower" class="panel-collapse collapse in">
                                     <div class="panel-body">
                                         <p id="lastMonthTotalPower" class="number">
                                             0
@@ -542,12 +542,12 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#saveCO2">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#sunChart">
                                     日照强度变化
                                 </a>
                             </h4>
                         </div>
-                        <div id="saveCO2" class="panel-collapse collapse in">
+                        <div id="sunChart" class="panel-collapse collapse in">
                             <div class="panel-body">
                                 <canvas id="chart" height="100" width="300">
                                 </canvas>

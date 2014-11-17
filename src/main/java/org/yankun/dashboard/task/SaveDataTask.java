@@ -3,6 +3,7 @@ package org.yankun.dashboard.task;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,11 +61,12 @@ public class SaveDataTask {
 	}
 	
 	private double getUsed(Weather weather) {
+		int seconds = DateTime.now().getMinuteOfHour() * 60;
 		long msStartDiff = new Date().getTime() - weather.getSunRiseTime().getTime();
 		long msEndDiff = weather.getSunDownTime().getTime() - new Date().getTime();
 		
 		if (msStartDiff > 0 && msEndDiff < 0) {
-			return ((double)msStartDiff / 1000) * (3 / 60 / 60);
+			return (double)seconds * (3 / 60 / 60);
 		}
 		return 0;
 	}

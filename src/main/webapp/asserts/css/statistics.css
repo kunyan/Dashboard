@@ -7,3 +7,44 @@
   background-color: transparent;
 }
 
+section {
+  position: relative;
+  border: 1px solid #000;
+  padding-top: 0;
+  background-color:#fff;
+}
+section.positioned {
+  position: absolute;
+  top:100px;
+  left:100px;
+  width:800px;
+  box-shadow: 0 0 15px #333;
+}
+.table-container {
+  overflow-y: auto;
+  height: 500px;
+  background-color:#fff;
+}
+
+td + td {
+  border-left:1px solid #eee;
+}
+
+thead th {
+  height: 0;
+  line-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  color: transparent;
+  border: none;
+  white-space: nowrap;
+}
+
+thead th div{
+  position: absolute;
+  color:#000;
+  top: 0;
+  padding: 8px;
+  line-height: normal;
+  background-color:#fff;
+}

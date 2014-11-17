@@ -18,6 +18,12 @@ public class Data implements Serializable {
 	
 	private double used;
 	
+	private int powerHour;
+	
+	private Date powerMaxDateTime;
+	
+	private double avgPower;
+	
 	private double saveCoal;
 	
 	private double saveCO2;
@@ -43,6 +49,7 @@ public class Data implements Serializable {
 	public void setCreateDateTime(Date createDateTime) {
 		this.createDateTime = createDateTime;
 	}
+	
 
 	public double getPower() {
 		return power;
@@ -58,6 +65,50 @@ public class Data implements Serializable {
 
 	public void setUsed(double used) {
 		this.used = used;
+	}
+
+	public int getPowerHour() {
+		return powerHour;
+	}
+
+	public void setPowerHour(int powerHour) {
+		this.powerHour = powerHour;
+	}
+
+	public Date getPowerMaxDateTime() {
+		return powerMaxDateTime;
+	}
+
+	public void setPowerMaxDateTime(Date powerMaxDateTime) {
+		this.powerMaxDateTime = powerMaxDateTime;
+	}
+
+	public double getAvgPower() {
+		return avgPower;
+	}
+
+	public void setAvgPower(double avgPower) {
+		this.avgPower = avgPower;
+	}
+
+	public void setSaveCoal(double saveCoal) {
+		this.saveCoal = saveCoal;
+	}
+
+	public void setSaveCO2(double saveCO2) {
+		this.saveCO2 = saveCO2;
+	}
+
+	public void setSubsidies(double subsidies) {
+		this.subsidies = subsidies;
+	}
+
+	public void setSaveIncome(double saveIncome) {
+		this.saveIncome = saveIncome;
+	}
+
+	public void setSurplusIncome(double surplusIncome) {
+		this.surplusIncome = surplusIncome;
 	}
 
 	public double getSaveCoal() {

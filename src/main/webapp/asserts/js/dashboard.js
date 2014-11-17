@@ -156,13 +156,12 @@ function getSubsidies(val){
 function getUsedToday(){
 	
 	var now = new Date(),
+		seconds = now.getMinutes() * 60 + now.getSeconds();
 		msStartDiff = now.getTime() - new Date(data.weather.sunRiseTime).getTime(),
 		msEndDiff = now.getTime() - new Date(data.weather.sunDownTime).getTime();
 	if (msStartDiff >= 0) {
 		if (msEndDiff <= 0) {
-			return (msStartDiff / 1000) * (3/60/60);
-		}else {
-			return data.todayTotal.used;
+			return seconds * (3/60/60);
 		}
 		
 	}
@@ -192,10 +191,10 @@ function render() {
     
     $(".todaySubsidies").text(toDecimal2(getSubsidies(data.todayTotal.power + increase)));
     $(".todaySubsidies").val(toDecimal2(getSubsidies(data.todayTotal.power + increase)));
-    $(".todaySaveIncome").text(toDecimal2(getSaveIncome(getUsedToday())));
-    $(".todaySaveIncome").val(toDecimal2(getSaveIncome(getUsedToday())));
-    $(".todaySurplusIncome").text(toDecimal2(getSurplusIncome(data.todayTotal.power + increase, getUsedToday())));
-    $(".todaySurplusIncome").val(toDecimal2(getSurplusIncome(data.todayTotal.power +increase, getUsedToday())));
+    $(".todaySaveIncome").text(toDecimal2(getSaveIncome(data.todayTotal.used + getUsedToday())));
+    $(".todaySaveIncome").val(toDecimal2(getSaveIncome(data.todayTotal.used + getUsedToday())));
+    $(".todaySurplusIncome").text(toDecimal2(getSurplusIncome(data.todayTotal.power + increase, data.todayTotal.used + getUsedToday())));
+    $(".todaySurplusIncome").val(toDecimal2(getSurplusIncome(data.todayTotal.power +increase, data.todayTotal.used + getUsedToday())));
     $(".todayIncomeTotal").text(toDecimal2(Number($(".todaySubsidies").val()) + Number($(".todaySaveIncome").val()) + Number($(".todaySurplusIncome").val())));
     
     
