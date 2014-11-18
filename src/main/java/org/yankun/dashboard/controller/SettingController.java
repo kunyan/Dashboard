@@ -3,13 +3,17 @@ package org.yankun.dashboard.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.yankun.dashboard.model.setting.SunPowerData;
 import org.yankun.dashboard.model.weather.Weather;
+import org.yankun.dashboard.model.weather.WeatherType;
 import org.yankun.dashboard.service.CalculatorService;
 import org.yankun.dashboard.service.DataService;
 import org.yankun.dashboard.service.WeatherService;
@@ -24,7 +28,7 @@ import org.yankun.dashboard.service.WeatherService;
 public class SettingController {
 	
 	@Autowired
-	private DataService settingService;
+	private DataService dataService;
 	
 	@Autowired
 	private WeatherService weatherService;
@@ -35,7 +39,8 @@ public class SettingController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ModelAndView index(ModelMap model) {
 		
-		model.addAttribute("powerList", settingService.getSunPowerDataList());
+		model.addAttribute("powerList", dataService.getSunPowerDataList());
+		model.addAttribute("weatherList", dataService.getWeatherTypeList());
 		return new ModelAndView("setting/index", model);
 	}
 
@@ -44,7 +49,7 @@ public class SettingController {
 		Weather weather = weatherService.getWeather();
 		Double weatherRate = ((double)weatherService.getWeatherRate(weather) / 100);
 		
-		List<SunPowerData> list = settingService.getSunPowerDataList();
+		List<SunPowerData> list = dataService.getSunPowerDataList();
 		
 		for (SunPowerData pd : list) {
 			pd.setPower(pd.getPower() * weatherRate);
@@ -53,9 +58,27 @@ public class SettingController {
 		return list;
 	}
 	
-	@RequestMapping(value = "/power/{hour}", method = RequestMethod.PUT)
-	public List<SunPowerData> setSunPowerDataByHour(int hour) {
-		return settingService.getSunPowerDataList();
+	@ResponseStatus(value = HttpStatus.OK)
+	@RequestMapping(value = "/power/{hour}/{sunHeight}/{power}", method = RequestMethod.POST)
+	public void updateSunPowerDataByHour(@PathVariable("hour") int hour,
+			@PathVariable("sunHeight") int sunHeight,
+			@PathVariable("power") double power) {
+		SunPowerData spd = new SunPowerData();
+		spd.setHour(hour);
+		spd.setPower(power);
+		spd.setSunHeight(sunHeight);
+		dataService.updateSunPowerData(spd);;
+	}
+	
+	@ResponseStatus(value = HttpStatus.OK)
+	@RequestMapping(value = "/weather/{id}/{rate}", method = RequestMethod.POST)
+	public void updateWeatherType(@PathVariable("id") int id,
+			@PathVariable("rate") int rate) {
+		WeatherType wt = new WeatherType();
+		wt.setId(id);
+		wt.setRate(rate);
+
+		dataService.updateWeatherType(wt);
 	}
 	
 //	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)

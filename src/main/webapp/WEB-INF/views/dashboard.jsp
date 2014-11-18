@@ -322,21 +322,21 @@
                                     <div class="col-xs-4 col-md-3">
                                         <div class="solar-panel">
                                             <a href="javascript:void(0)">
-                                                <img src="asserts/img/solar-panel.jpg" />
+                                                <img src="${pageContext.request.contextPath}/asserts/img/solar-panel.jpg" />
                                             </a>
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-md-3">
                                         <div class="solar-panel">
                                             <a href="javascript:void(0)">
-                                                <img src="asserts/img/solar-panel.jpg" />
+                                                <img src="${pageContext.request.contextPath}/asserts/img/solar-panel.jpg" />
                                             </a>
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-md-3">
                                         <div class="solar-panel">
                                             <a href="javascript:void(0)">
-                                                <img src="asserts/img/solar-panel.jpg" />
+                                                <img src="${pageContext.request.contextPath}/asserts/img/solar-panel.jpg" />
                                             </a>
                                         </div>
                                     </div>
@@ -346,7 +346,7 @@
                                         </h4>
                                         <p>
                                             <span class="number careerIncomeTotal red">
-                                                10000
+                                                0
                                             </span>
                                             元
                                         </p>
@@ -358,20 +358,20 @@
                                             <th>
                                             </th>
                                             <th>
-                                                <img class="pig" src="asserts/img/pig.png" />
-                                                <img class="coin" src="asserts/img/coin.gif" />
+                                                <img class="pig" src="${pageContext.request.contextPath}/asserts/img/pig.png" />
+                                                <img class="coin" src="${pageContext.request.contextPath}/asserts/img/coin.gif" />
                                             </th>
                                             <th>
-                                                <img class="pig" src="asserts/img/pig.png" />
-                                                <img class="coin" src="asserts/img/coin.gif" />
+                                                <img class="pig" src="${pageContext.request.contextPath}/asserts/img/pig.png" />
+                                                <img class="coin" src="${pageContext.request.contextPath}/asserts/img/coin.gif" />
                                             </th>
                                             <th>
-                                                <img class="pig" src="asserts/img/pig.png" />
-                                                <img class="coin" src="asserts/img/coin.gif" />
+                                                <img class="pig" src="${pageContext.request.contextPath}/asserts/img/pig.png" />
+                                                <img class="coin" src="${pageContext.request.contextPath}/asserts/img/coin.gif" />
                                             </th>
                                             <th>
-                                                <img class="pig" src="asserts/img/Coins.png" />
-                                                <img class="coin" src="asserts/img/coin.gif" />
+                                                <img class="pig" src="${pageContext.request.contextPath}/asserts/img/Coins.png" />
+                                                <img class="coin" src="${pageContext.request.contextPath}/asserts/img/coin.gif" />
                                             </th>
                                         </tr>
                                         <tr>
@@ -451,25 +451,25 @@
                                             </td>
                                             <td>
                                                 <span id="careerSubsidies" class="number">
-                                                    32423
+                                                    0
                                                 </span>
                                                 元
                                             </td>
                                             <td>
                                                 <span id="careerSaveIncome" class="number">
-                                                    32423
+                                                    0
                                                 </span>
                                                 元
                                             </td>
                                             <td>
                                                 <span id="careerSurplusIncome" class="number">
-                                                    32423
+                                                    0
                                                 </span>
                                                 元
                                             </td>
                                             <td>
                                                 <span class="number careerIncomeTotal">
-                                                    32423
+                                                    0
                                                 </span>
                                                 元
                                             </td>
@@ -559,17 +559,17 @@
         </div>
         <script src="http://php.weather.sina.com.cn/iframe/index/w_cl.php?day=0&charset=utf-8&city=%E9%A1%BA%E4%B9%89">
         </script>
-        <script src="asserts/js/lib/jquery-1.11.1.min.js">
+        <script src="${pageContext.request.contextPath}/asserts/js/lib/jquery-1.11.1.min.js">
         </script>
-        <script src="asserts/js/lib/bootstrap.min.js">
+        <script src="${pageContext.request.contextPath}/asserts/js/lib/bootstrap.min.js">
         </script>
-        <script src="asserts/js/lib/gauge.min.js">
+        <script src="${pageContext.request.contextPath}/asserts/js/lib/gauge.min.js">
         </script>
-        <script src="asserts/js/lib/Chart.min.js">
+        <script src="${pageContext.request.contextPath}/asserts/js/lib/Chart.min.js">
         </script>
-        <script src="asserts/js/sys_config.js">
+        <script src="${pageContext.request.contextPath}/asserts/js/sys_config.js">
         </script>
-        <script src="asserts/js/dashboard.js">
+        <script src="${pageContext.request.contextPath}/asserts/js/dashboard.js">
         </script>
     </body>
 

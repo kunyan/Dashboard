@@ -15,18 +15,18 @@
             高顺太阳能分布式发电监测系统
         </title>
         <!-- Bootstrap -->
-        <link href="asserts/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/asserts/css/bootstrap.min.css" rel="stylesheet" />
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
         queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file://
         -->
         <!--[if lt IE 9]>
-            <script src="asserts/js/lib/html5shiv.min.js">
+            <script src="${pageContext.request.contextPath}/asserts/js/lib/html5shiv.min.js">
             </script>
-            <script src="asserts/js/lib/respond.min.js">
+            <script src="${pageContext.request.contextPath}/asserts/js/lib/respond.min.js">
             </script>
         <![endif]-->
-        <link href="asserts/css/statistics.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/asserts/css/statistics.css" rel="stylesheet" />
     </head>
     <body>
         <header class="navbar navbar-default">
@@ -168,19 +168,19 @@
 		</div>
         <script src="http://php.weather.sina.com.cn/iframe/index/w_cl.php?day=0&charset=utf-8&city=%E9%A1%BA%E4%B9%89">
         </script>
-        <script src="asserts/js/lib/jquery-1.11.1.min.js">
+        <script src="${pageContext.request.contextPath}/asserts/js/lib/jquery-1.11.1.min.js">
         </script>
-        <script src="asserts/js/lib/bootstrap.min.js">
+        <script src="${pageContext.request.contextPath}/asserts/js/lib/bootstrap.min.js">
         </script>
-        <script src="asserts/js/lib/gauge.min.js">
+        <script src="${pageContext.request.contextPath}/asserts/js/lib/gauge.min.js">
         </script>
-        <script src="asserts/js/lib/Chart.min.js">
+        <script src="${pageContext.request.contextPath}/asserts/js/lib/Chart.min.js">
         </script>
-        <script src="asserts/js/sys_config.js">
+        <script src="${pageContext.request.contextPath}/asserts/js/sys_config.js">
         </script>
-        <script src="asserts/js/data_config.js">
+        <script src="${pageContext.request.contextPath}/asserts/js/data_config.js">
         </script>
-        <script src="asserts/js/statistics.js">
+        <script src="${pageContext.request.contextPath}/asserts/js/statistics.js">
         </script>
     </body>
 

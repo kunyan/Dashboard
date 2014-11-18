@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.yankun.dashboard.dao.BaseDao;
 import org.yankun.dashboard.model.Data;
 import org.yankun.dashboard.model.setting.SunPowerData;
+import org.yankun.dashboard.model.weather.WeatherType;
 import org.yankun.dashboard.service.DataService;
 
 @Service
@@ -38,10 +39,24 @@ public class DataServiceImpl implements DataService {
 		String sql = "select * from setting_power_tbl";
 		return dao.query(sql,new BeanPropertyRowMapper<SunPowerData>(SunPowerData.class));
 	}
+	
+	@Override
+	public List<WeatherType> getWeatherTypeList() {
+		String sql = "select * from setting_weather_tbl";
+		return dao.query(sql,new BeanPropertyRowMapper<WeatherType>(WeatherType.class));
+	}
+	
+	@Override
+	public void updateWeatherType(WeatherType weatherType) {
+		String sql = "update setting_weather_tbl set rate = ? where id = ? ";
+		dao.update(sql, weatherType.getRate(), weatherType.getId());
+
+	}
 
 	@Override
 	public void updateSunPowerData(SunPowerData sunPowerData) {
-		// TODO Auto-generated method stub
+		String sql = "update setting_power_tbl set sunHeight = ?,power = ? where hour = ? ";
+		dao.update(sql, sunPowerData.getSunHeight(), sunPowerData.getPower(), sunPowerData.getHour());
 
 	}
 

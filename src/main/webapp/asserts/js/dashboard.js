@@ -342,7 +342,7 @@ function refresh() {
             }
         }
 
-        consumeGauge.setValue(getUsedToday());
+        consumeGauge.setValue(data.todayTotal.used + getUsedToday());
 
     }, sysConfig.guageRefreshTime * 1000);
 

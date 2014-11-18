@@ -13,7 +13,7 @@
 		<java-version>1.7</java-version>
 		<org.springframework-version>4.1.1.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.7.2</org.aspectj-version>
-		<org.slf4j-version>1.7.5</org.slf4j-version>
+		<org.slf4j-version>1.7.7</org.slf4j-version>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
@@ -139,7 +139,6 @@
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
 		</dependency>
-
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
@@ -169,6 +168,14 @@
 				<version>2.2</version>
 				<configuration>
 					<path>/</path>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
 		</plugins>

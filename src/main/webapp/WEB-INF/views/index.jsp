@@ -12,18 +12,18 @@
             高顺太阳能分布式发电监测系统
         </title>
         <!-- Bootstrap -->
-        <link href="asserts/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/asserts/css/bootstrap.min.css" rel="stylesheet" />
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
         queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file://
         -->
         <!--[if lt IE 9]>
-            <script src="asserts/js/lib/html5shiv.min.js">
+            <script src="${pageContext.request.contextPath}/asserts/js/lib/html5shiv.min.js">
             </script>
-            <script src="asserts/js/lib/respond.min.js">
+            <script src="${pageContext.request.contextPath}/asserts/js/lib/respond.min.js">
             </script>
         <![endif]-->
-        <link href="asserts/css/index.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/asserts/css/index.css" rel="stylesheet" />
     </head>
     <body>
         <header class="navbar navbar-default">
@@ -93,9 +93,9 @@
                         </p>
             </div>
 		</div>
-        <script src="asserts/js/lib/jquery-1.11.1.min.js">
+        <script src="${pageContext.request.contextPath}/asserts/js/lib/jquery-1.11.1.min.js">
         </script>
-        <script src="asserts/js/lib/bootstrap.min.js">
+        <script src="${pageContext.request.contextPath}/asserts/js/lib/bootstrap.min.js">
         </script>
     </body>
 
