@@ -30,6 +30,10 @@ td + td {
   border-left:1px solid #eee;
 }
 
+td{
+	text-align:center !important;
+}
+
 thead th {
   height: 0;
   line-height: 0;

@@ -91,6 +91,7 @@ public class APIController {
 			
 			if (sunRiseHour <= spd.getHour() && spd.getHour() <= sunDownHour) {
 				spd.setPower(spd.getPower() * weatherRate);	
+				spd.setSunHeight((int)(spd.getSunHeight() * weatherRate));
 				list.add(spd);
 			}
 			

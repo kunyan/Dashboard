@@ -51,17 +51,17 @@
                 <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="/">
+                            <a href="${pageContext.request.contextPath}/">
                                 项目介绍
                             </a>
                         </li>
                         <li>
-                            <a href="dashboard">
+                            <a href="${pageContext.request.contextPath}/dashboard">
                                 监控看板
                             </a>
                         </li>
                         <li class="active">
-                            <a href="statistics">
+                            <a href="${pageContext.request.contextPath}/statistics">
                                 数据统计
                             </a>
                         </li>

@@ -41,24 +41,24 @@
                         <span class="icon-bar">
                         </span>
                     </button>
-                    <a href="/" class="navbar-brand">
+                    <a href="${pageContext.request.contextPath}" class="navbar-brand">
                         高顺太阳能分布式发电监测系统
                     </a>
                 </div>
                 <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="/">
+                            <a href="${pageContext.request.contextPath}/">
                                 项目介绍
                             </a>
                         </li>
                         <li class="active">
-                            <a href="dashboard">
+                            <a href="${pageContext.request.contextPath}/dashboard">
                                 监控看板
                             </a>
                         </li>
                         <li>
-                            <a href="statistics">
+                            <a href="${pageContext.request.contextPath}/statistics">
                                 数据统计
                             </a>
                         </li>
