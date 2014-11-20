@@ -571,6 +571,26 @@
         </script>
         <script src="${pageContext.request.contextPath}/asserts/js/dashboard.js">
         </script>
+        <script>
+        $(document).ready(function(){
+        	$.getJSON("${pageContext.request.contextPath}/api/data.json",function(response){
+        		data = eval(response);
+        		$("#systemTotal").text(10);
+        	    $("#yesterdayTotalPower").text(data.yesterdayTotal.power);
+        	    $("#lastWeekTotalPower").text(data.lastWeekTotal.power);
+        	    $("#lastMonthTotalPower").text(data.lastMonthTotal.power);
+        	    chart(refreshCharData());
+        	    realTimeGauge = showRealTimeGauge();
+        	    consumeGauge = showConsumeGauge();
+        	    refresh();
+        	    render();
+        	    
+        	    setWeather();
+        	});
+        	
+            
+        });
+        </script>
     </body>
 
 </html>

@@ -217,24 +217,7 @@ function render() {
 }
 
 
-$(document).ready(function(){
-	$.getJSON("/api/data.json",function(response){
-		data = eval(response);
-		$("#systemTotal").text(10);
-	    $("#yesterdayTotalPower").text(data.yesterdayTotal.power);
-	    $("#lastWeekTotalPower").text(data.lastWeekTotal.power);
-	    $("#lastMonthTotalPower").text(data.lastMonthTotal.power);
-	    chart(refreshCharData());
-	    realTimeGauge = showRealTimeGauge();
-	    consumeGauge = showConsumeGauge();
-	    refresh();
-	    render();
-	    
-	    setWeather();
-	});
-	
-    
-});
+
 
 function setWeather(){
 	 for(var i in SWther.w){
