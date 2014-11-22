@@ -130,7 +130,6 @@ public class DataServiceImpl implements DataService {
 					Double.class);
 		} catch (Exception e) {
 		}
-		System.err.println("Avg:" + avg);
 		return avg;
 	}
 	
@@ -143,8 +142,6 @@ public class DataServiceImpl implements DataService {
 					Integer.class);
 		} catch (Exception e) {
 		}
-		
-		System.err.println("Power:" + power);
 		return power;
 	}
 }

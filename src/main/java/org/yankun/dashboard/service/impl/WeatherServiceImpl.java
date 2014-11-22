@@ -73,13 +73,11 @@ public class WeatherServiceImpl implements WeatherService {
 			URI uri = builder.build();
 			
 			String jsonString = restTemplate.getForObject(uri, String.class);
-			
-
 			ObjectMapper mapper = new ObjectMapper();
 			JsonNode weatherJson = mapper.readTree(jsonString);
 			
 			String sun = weatherJson.get("f").get("f1").get(0).get("fi").asText();
-			System.err.println(sun);
+			
 			Weather weather = new Weather();
 			String sunRiseStr =  sun.substring(0, sun.indexOf("|"));
 			String sunDownStr =  sun.substring(sun.indexOf("|") + 1);
@@ -97,7 +95,11 @@ public class WeatherServiceImpl implements WeatherService {
 			sunDownCal.set(Calendar.SECOND, 0);
 
 			weather.setForecastTime(sdf.parse(weatherJson.get("f").get("f0").asText()));
-			weather.setWeatherType(weatherJson.get("f").get("f1").get(0).get("fa").asText());
+			String dayWeatherType = weatherJson.get("f").get("f1").get(0).get("fa").asText();
+			String nightWeatherType = weatherJson.get("f").get("f1").get(0).get("fb").asText();
+			
+			String weatherType = dayWeatherType != null && dayWeatherType.trim().length() != 0 ? dayWeatherType : nightWeatherType;
+			weather.setWeatherType(weatherType);
 			weather.setSunRiseTime(sunRiseCal.getTime());
 			weather.setSunDownTime(sunDownCal.getTime());
 			
@@ -120,11 +122,12 @@ public class WeatherServiceImpl implements WeatherService {
 
 	@Override
 	public int getWeatherRate(Weather weather) {
+		logger.info("Weather Type:" + weather.getWeatherType());
 		String sql = "select rate from setting_weather_tbl where id = ? ";
 		try {
 			return dao.queryForObject(sql, Integer.class, weather.getWeatherType());
 		} catch (EmptyResultDataAccessException e) {
-//			logger.error("Can not find weather in database", e);
+			logger.error("Can not find weather in database", e);
 		}
 		return 100;
 	

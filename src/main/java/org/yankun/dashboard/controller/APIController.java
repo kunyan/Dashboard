@@ -40,9 +40,6 @@ public class APIController {
 	public Weather getWeather() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Weather weather = weatherService.getWeather();
-		
-		System.err.println(sdf.format(weather.getSunRiseTime()));
-		System.err.println(sdf.format(weather.getSunDownTime()));
 		return weather;
 	}
 	

@@ -60,7 +60,6 @@ public class MainController {
 		if (startDate != null && endDate != null) {
 			list = dataService.getDataListByDatePeriod(startDate, endDate);
 		}
-		System.err.println(list.size());
 		model.put("dataList", list);
 		model.put("startDate", startDateStr);
 		model.put("endDate", endDateStr);
