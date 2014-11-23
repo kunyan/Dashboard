@@ -1,19 +1,3 @@
-var todayIncrease,
-    todayTotal,
-    thisYearTotal,
-    careerTotal,
-    yesterdayTotal,
-    lastWeekTotal,
-    lastMonthTotal,
-    todaySaveCoal,
-    careerSaveCoal,
-    todaySaveCO2,
-    barChart,
-    careerSaveCO2,
-    hour,
-    dataConfig,
-    chartData = [];
-
 var data = {
 	weater: null,
 	careerTotalPower: 0,
@@ -24,6 +8,8 @@ var data = {
     todayTotalPower: 0,
     sunPowerData: null
 }
+
+var chart;
 
 
 function showRealTimeGauge() {
@@ -111,14 +97,56 @@ function getIncrease(min, max) {
 }
 
 
-function chart(data) {
-    var ctx = document.getElementById("chart").getContext("2d");
-    barChart = new Chart(ctx).Bar(data, {
+function createChart(data) {
+	var ctx = document.getElementById("chart").getContext("2d");
+    return new Chart(ctx).Bar(data, {
         responsive: true,
         barValueSpacing: 10
-    }).update();
+    });
 }
 
+function getCharData(){
+    var now = new Date(),
+        hour = now.getHours(),
+        minutes = now.getMinutes(),
+        seconds = now.getSeconds();
+        
+    var barChartData = {
+        labels: [],
+        datasets: [{
+            fillColor: "#F8C538",
+            strokeColor: "#F8C538",
+            highlightFill: "#F55854",
+            highlightStroke: "#F55854",
+            data: []
+        }]
+
+    }
+    
+    if (hour < data.sunPowerData[0].hour) {
+        for (var i = 0; i < data.sunPowerData.length; i++) {
+            if (data.sunPowerData[i].power != 0) {
+                barChartData.labels.push(data.sunPowerData[i].hour + "时");
+                barChartData.datasets[0].data.push(0);
+            }
+        }
+    }
+    
+    if (hour >= data.sunPowerData[0].hour) {
+        for (var i = 0; i < data.sunPowerData.length; i++) {
+            if (data.sunPowerData[i].power != 0) {
+                if (data.sunPowerData[i].hour <= hour) {
+                    barChartData.labels.push(data.sunPowerData[i].hour + "时");
+                    barChartData.datasets[0].data.push(data.sunPowerData[i].sunHeight);
+                } else {
+                    barChartData.labels.push(data.sunPowerData[i].hour + "时");
+                    barChartData.datasets[0].data.push(0);
+                }
+            }
+        }
+    } 
+    return barChartData;
+}
 
 var realTimeGauge,
     consumeGauge;
@@ -177,6 +205,12 @@ function getSurplusIncome(power, used){
 }
 function render() {
     var increase = getIncrease();
+    
+    $("#systemTotal").text(10);
+    $("#yesterdayTotalPower").text(data.yesterdayTotal.power);
+    $("#lastWeekTotalPower").text(data.lastWeekTotal.power);
+    $("#lastMonthTotalPower").text(data.lastMonthTotal.power);
+    
     //统计部分
     $("#todayTotalPower").text(toDecimal2(data.todayTotal.power + increase));
     $("#thisYearTotalPower").text(toDecimal2(data.thisYearTotal.power  + increase));
@@ -196,9 +230,6 @@ function render() {
     $(".todaySurplusIncome").text(toDecimal2(getSurplusIncome(data.todayTotal.power + increase, data.todayTotal.used + getUsedToday())));
     $(".todaySurplusIncome").val(toDecimal2(getSurplusIncome(data.todayTotal.power +increase, data.todayTotal.used + getUsedToday())));
     $(".todayIncomeTotal").text(toDecimal2(Number($(".todaySubsidies").val()) + Number($(".todaySaveIncome").val()) + Number($(".todaySurplusIncome").val())));
-    
-    
-    
     
     $("#careerSubsidies").text(toDecimal2(getSubsidies(data.careerTotal.power + increase)));
     $("#careerSaveIncome").text(toDecimal2(getSaveIncome(getUsedToday()) + data.careerTotal.used));
@@ -221,59 +252,18 @@ function render() {
 
 function setWeather(){
 	 for(var i in SWther.w){
-	     $("#dayWeather").text(SWther.w[i][0].s1);
-	     $("#nightWeather").text(SWther.w[i][0].s2);
-	
-	     $("#t1").text(SWther.w[i][0].t1);
-	     $("#t2").text(SWther.w[i][0].t2);
-	     $("#p1").text(SWther.w[i][0].p1);
-	     $("#d1").text(SWther.w[i][0].d1);
-	
-	 	$("#weatherUpdate").text(SWther.add.update);
+//	     $("#dayWeather").text(SWther.w[i][0].s1);
+//	     $("#nightWeather").text(SWther.w[i][0].s2);
+//	
+//	     $("#t1").text(SWther.w[i][0].t1);
+//	     $("#t2").text(SWther.w[i][0].t2);
+//	     $("#p1").text(SWther.w[i][0].p1);
+//	     $("#d1").text(SWther.w[i][0].d1);
+//	
+//	 	$("#weatherUpdate").text(SWther.add.update);
 	  }
 }
-function refreshCharData(){
-    var now = new Date(),
-        hour = now.getHours(),
-        minutes = now.getMinutes(),
-        seconds = now.getSeconds();
-        
-    var barChartData = {
-        labels: [],
-        datasets: [{
-            fillColor: "#F8C538",
-            strokeColor: "#F8C538",
-            highlightFill: "#F55854",
-            highlightStroke: "#F55854",
-            data: []
-        }]
 
-    }
-    
-    if (hour < data.sunPowerData[0].hour) {
-        for (var i = 0; i < data.sunPowerData.length; i++) {
-            if (data.sunPowerData[i].power != 0) {
-                barChartData.labels.push(data.sunPowerData[i].hour + "时");
-                barChartData.datasets[0].data.push(0);
-            }
-        }
-    }
-    
-    if (hour >= data.sunPowerData[0].hour) {
-        for (var i = 0; i < data.sunPowerData.length; i++) {
-            if (data.sunPowerData[i].power != 0) {
-                if (data.sunPowerData[i].hour <= hour) {
-                    barChartData.labels.push(data.sunPowerData[i].hour + "时");
-                    barChartData.datasets[0].data.push(data.sunPowerData[i].sunHeight);
-                } else {
-                    barChartData.labels.push(data.sunPowerData[i].hour + "时");
-                    barChartData.datasets[0].data.push(0);
-                }
-            }
-        }
-    } 
-    return barChartData;
-}
 function toDecimal2(x) {
     var f = parseFloat(x);
     if (isNaN(f)) {

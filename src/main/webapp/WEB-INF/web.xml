@@ -2,17 +2,6 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
 	<display-name>pms</display-name>
 	
-	<!--  Spring 服务层的配置文件 -->
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/*.xml</param-value>
-	</context-param>
-	
-	<!--  Spring 容器启动监听器 -->
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-	
 	<context-param>  
         <param-name>log4jConfigLocation</param-name>  
         <param-value>WEB-INF/properties/log4j.properties</param-value>  
@@ -29,15 +18,18 @@
 	
 	
 	<!--  Spring MVC 的Servlet，它将加载/WEB-INF/spring/mvc/*.xml的
-	配置文件，以启动Spring MVC模块-->
+	配置文件，以启动Spring MVC模块-->	
 	<servlet>
-		<servlet-name>dispatcher</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/spring/*.xml</param-value>
-		</init-param>
-	</servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+                /WEB-INF/spring/mvc.xml
+            </param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
 	
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>

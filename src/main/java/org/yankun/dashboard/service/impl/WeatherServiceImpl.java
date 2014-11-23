@@ -122,7 +122,6 @@ public class WeatherServiceImpl implements WeatherService {
 
 	@Override
 	public int getWeatherRate(Weather weather) {
-		logger.info("Weather Type:" + weather.getWeatherType());
 		String sql = "select rate from setting_weather_tbl where id = ? ";
 		try {
 			return dao.queryForObject(sql, Integer.class, weather.getWeatherType());

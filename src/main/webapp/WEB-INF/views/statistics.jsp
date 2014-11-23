@@ -102,7 +102,6 @@
 						<th>时间<div>时间</div></th>
 						<th>发电量(KW)<div>发电量(KW)</div></th>
 						<th>发电时间(小时)<div>发电时间(小时)</div></th>
-						<th>最高发电时点<div>最高发电时点</div></th>
 						<th>日均发电(KW)<div>日均发电(KW)</div></th>
 						<th>减少C排放(KG)<div>减少C排放(KG)</div></th>
 						<th>减少CO2排放(KG)<div>减少CO2排放(KG)</div></th>
@@ -135,7 +134,6 @@
 							<td><fmt:formatDate value="${data.createDateTime}" pattern="yyyy-MM-dd"/></td>
 							<td><fmt:formatNumber  value="${data.power}"  pattern="#0.00"/></td>
 							<td>${data.powerHour}</td>
-							<td><fmt:formatDate value="${data.powerMaxDateTime}" pattern="HH:mm:ss"/></td>
 							<td><fmt:formatNumber  value="${data.avgPower}"  pattern="#0.00"/></td>
 							<td><fmt:formatNumber  value="${data.saveCoal}"  pattern="#0.00"/></td>
 							<td><fmt:formatNumber  value="${data.saveCO2}"  pattern="#0.00"/></td>
@@ -151,7 +149,6 @@
 						<th>总计</th>
 						<th></th>
 						<td class="js-col3"><fmt:formatNumber  value="${powerSum}"  pattern="#0.00"/></td>
-						<td class="js-col4"></td>
 						<td class="js-col5"><fmt:formatNumber  value="${powerHourSum}"  pattern="#0.00"/></td>
 						<td class="js-col6"></td>
 						<td class="js-col7"><fmt:formatNumber  value="${saveCoalSum}"  pattern="#0.00"/></td>

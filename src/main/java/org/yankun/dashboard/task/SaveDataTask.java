@@ -32,10 +32,9 @@ public class SaveDataTask {
 	@Autowired
 	private DataService settingService;
 	
-	@Scheduled(cron = "0 0 0-23 * * ?")  
+	@Scheduled(cron = "0 0 * * * *")  
     public void testJob() {  
 		Weather weather = weatherService.getWeather();
-		
 		if (!this.isSunExsits(weather)) {
 			return;
 		}

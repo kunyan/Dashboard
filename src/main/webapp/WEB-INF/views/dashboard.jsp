@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.util.*" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
     
@@ -83,48 +86,7 @@
                                 </div>
                                 <div id="weather" class="panel-collapse collapse in">
                                     <div class="panel-body">
-                                        <table class="table table-hover table-condensed">
-                                            <tr>
-                                                <th>
-                                                    今天白天：
-                                                </th>
-                                                <td id="dayWeather" colspan="2">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    今天夜间：
-                                                </th>
-                                                <td id="nightWeather" colspan="2">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    温度：
-                                                </th>
-                                                <td>
-                                                    高:<span id="t1"></span>°C
-                                                </td>
-                                                <td>
-                                                    低:<span id="t2"></span>°C
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    风：
-                                                </th>
-                                                <td>
-                                                    风向:<span id="d1"></span>
-                                                </td>
-                                                <td>
-                                                    风力:<span id="p1"></span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-												<td id="weatherUpdate"colspan="3"></td>
-											</tr>
-                                            
-                                        </table>
+                                        <iframe allowtransparency="true" frameborder="0" width="140" height="154" scrolling="no" src="http://tianqi.2345.com/plugin/widget/index.htm?s=2&z=3&t=1&v=1&d=1&bd=0&k=&f=&q=1&e=1&a=1&c=60202&w=140&h=128&align=center"></iframe>
                                     </div>
                                 </div>
                             </div>
@@ -393,7 +355,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td style="font-size:14px;padding-left:4px" class="tl">
+                                            <td style="text-align:left;font-size:14px;padding-left:4px" class="tl">
                                                 当日发电收入
                                             </td>
                                             <td>
@@ -426,7 +388,7 @@
                                             </td>
                                         </tr>
                                         <tr id="moneyRemark">
-                                            <td style="font-size:14px;padding-left:4px" class="tl">
+                                            <td style="text-align:left;font-size:14px;padding-left:4px" class="tl">
                                                 当日发电收入算法
                                             </td>
                                             <td>
@@ -446,7 +408,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="font-size:14px;padding-left:4px" class="tl">
+                                            <td style="text-align:left;font-size:14px;padding-left:4px" class="tl">
                                                 生涯总收入
                                             </td>
                                             <td>
@@ -559,35 +521,40 @@
         </div>
         <script src="http://php.weather.sina.com.cn/iframe/index/w_cl.php?day=0&charset=utf-8&city=%E9%A1%BA%E4%B9%89">
         </script>
-        <script src="${pageContext.request.contextPath}/asserts/js/lib/jquery-1.11.1.min.js">
+        <script src="${rc.contextPath}/asserts/js/lib/jquery-1.11.1.min.js">
         </script>
-        <script src="${pageContext.request.contextPath}/asserts/js/lib/bootstrap.min.js">
+        <script src="${rc.contextPath}/asserts/js/lib/bootstrap.min.js">
         </script>
-        <script src="${pageContext.request.contextPath}/asserts/js/lib/gauge.min.js">
+        <script src="${rc.contextPath}/asserts/js/lib/gauge.min.js">
         </script>
-        <script src="${pageContext.request.contextPath}/asserts/js/lib/Chart.min.js">
+        <script src="${rc.contextPath}/asserts/js/lib/Chart.min.js">
         </script>
-        <script src="${pageContext.request.contextPath}/asserts/js/sys_config.js">
+        <script src="${rc.contextPath}/asserts/js/sys_config.js">
         </script>
-        <script src="${pageContext.request.contextPath}/asserts/js/dashboard.js">
+        <script src="${rc.contextPath}/asserts/js/dashboard.js">
         </script>
         <script>
         $(document).ready(function(){
-        	$.getJSON("${pageContext.request.contextPath}/api/data.json",function(response){
+        	$.getJSON("${rc.contextPath}/api/data.json",function(response){
         		data = eval(response);
-        		$("#systemTotal").text(10);
-        	    $("#yesterdayTotalPower").text(data.yesterdayTotal.power);
-        	    $("#lastWeekTotalPower").text(data.lastWeekTotal.power);
-        	    $("#lastMonthTotalPower").text(data.lastMonthTotal.power);
-        	    chart(refreshCharData());
         	    realTimeGauge = showRealTimeGauge();
         	    consumeGauge = showConsumeGauge();
+        	    chart = createChart(getCharData());
         	    refresh();
-        	    render();
-        	    
+        	    render();   
         	    setWeather();
         	});
         	
+            setInterval(function() {
+            	var now = new Date();
+            	if (now.getMinutes() == 0 && now.getSeconds() == 0) {
+            		$.getJSON("${pageContext.request.contextPath}/api/data.json",function(response){
+                		data = eval(response);
+                		chart = createChart(getCharData());
+                	});
+            	}            	
+            }, 1000);
+            
             
         });
         </script>
