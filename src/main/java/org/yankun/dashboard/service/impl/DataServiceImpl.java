@@ -64,7 +64,7 @@ public class DataServiceImpl implements DataService {
 	@Override
 	public Data getSumDataByDatePeriod(Date startDate, Date endDate){
 		try {
-			String sql = "select COALESCE(SUM(power), 0) as power, COALESCE(SUM(used), 0) as used from power_data_tbl where createDateTime between ? and ? ";
+			String sql = "select COALESCE(SUM(power), 0) as power, COALESCE(SUM(used), 0) as used from power_data_tbl where createDateTime between DATE(?) and DATE(?) ";
 			return dao.queryForObject(
 					sql, new Object[] { startDate, endDate }, 
 					new BeanPropertyRowMapper<Data>(Data.class));
@@ -88,8 +88,6 @@ public class DataServiceImpl implements DataService {
 			sb.append(" where DATE(createDateTime) between DATE(?) and DATE(?)  ");
 			sb.append(" group by ");
 			sb.append(" DATE(createDateTime)  ");
-			
-			
 			
 			String sql = sb.toString();
 			System.err.println(sql);

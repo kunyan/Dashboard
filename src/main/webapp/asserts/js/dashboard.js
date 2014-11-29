@@ -207,9 +207,9 @@ function render() {
     var increase = getIncrease();
     
     $("#systemTotal").text(10);
-    $("#yesterdayTotalPower").text(data.yesterdayTotal.power);
-    $("#lastWeekTotalPower").text(data.lastWeekTotal.power);
-    $("#lastMonthTotalPower").text(data.lastMonthTotal.power);
+    $("#yesterdayTotalPower").text(toDecimal2(data.yesterdayTotal.power));
+    $("#lastWeekTotalPower").text(toDecimal2(data.lastWeekTotal.power));
+    $("#lastMonthTotalPower").text(toDecimal2(data.lastMonthTotal.power));
     
     //统计部分
     $("#todayTotalPower").text(toDecimal2(data.todayTotal.power + increase));
@@ -305,8 +305,11 @@ function refresh() {
             if (data.sunPowerData[i].power != 0) {
                 if (hour == data.sunPowerData[i].hour) { //当前小时符合数据小时
                     current = data.sunPowerData[i].power;
-                    if ((i + 1) <= data.sunPowerData.length) { //当前数据不是最后一个
+                    if ((i + 1) < data.sunPowerData.length) { //当前数据不是最后一个
                         current = current + (data.sunPowerData[i + 1].power - data.sunPowerData[i].power) / 3600 * (seconds + minutes * 60);
+                    
+                    } else {
+                    	current = current + (0 - data.sunPowerData[i].power) / 3600 * (seconds + minutes * 60);
                     
                     }
                     realTimeGauge.setValue(Math.random() * ((current - 0.02) - (current + 0.02)) + (current - 0.02));

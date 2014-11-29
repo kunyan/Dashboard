@@ -34,9 +34,9 @@ public class DateUtils {
 		}
 		return null;
 	}
-	public static Date getThisMonthFirstDay(){
+	public static Date getLastMonthLastDay(){
 		try {
-			return sdf.parse(DateTime.now().minusMonths(1).dayOfMonth().withMaximumValue().plusDays(1).toString("yyyy-MM-dd"));
+			return sdf.parse(DateTime.now().minusMonths(1).dayOfMonth().withMaximumValue().toString("yyyy-MM-dd"));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -51,9 +51,10 @@ public class DateUtils {
 		}
 		return null;
 	}
-	public static Date getThisWeekFirstDay(){
+	
+	public static Date getLastWeekLastDay(){
 		try {
-			return sdf.parse(DateTime.now().minusWeeks(1).dayOfWeek().withMaximumValue().plusDays(1).toString("yyyy-MM-dd"));
+			return sdf.parse(DateTime.now().minusWeeks(1).dayOfWeek().withMaximumValue().toString("yyyy-MM-dd"));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

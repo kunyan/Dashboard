@@ -81,7 +81,7 @@
 							<c:forEach items="${weatherList}" var="weatherType">
 								<tr>
 									<td>${weatherType.chinese}<input class="id" type="hidden" value="${weatherType.id}"></td>
-									<td><input class="rate" type="text" value="${weatherType.rate}"/>%</td>
+									<td><input class="rate input-sm" type="text" value="${weatherType.rate}"/>%</td>
 									<td><input class="js-update-weather" type="button" value="更新"/></td>
 								</tr>
 							</c:forEach>
@@ -102,12 +102,15 @@
 			var sunHeight = $(this).parents("tr").find(".sunHeight").val();
 			var power = $(this).parents("tr").find(".power").val();
 			
-			$.ajax({
-				  url: "${pageContext.request.contextPath}/setting/power/" + hour + "/" + sunHeight + "/" + power,
-				  type: "POST"
-				}).done(function() {
-					alert("更新成功");
-				});
+			$.post("${rc.contextPath}/setting/power",
+			{
+			  hour: hour,
+			  sunHeight: sunHeight,
+			  power: power
+			},
+			function(data,status){
+			 alert("更新成功");
+			});
 			
 		});
 		
@@ -115,12 +118,14 @@
 			var id = $(this).parents("tr").find(".id").val();
 			var rate = $(this).parents("tr").find(".rate").val();
 			
-			$.ajax({
-				  url: "${pageContext.request.contextPath}/setting/weather/" + id + "/" + rate,
-				  type: "POST"
-				}).done(function() {
-					alert("更新成功");
-				});
+			$.post("${rc.contextPath}/setting/weather",
+			{
+			  id: id,
+			  rate: rate
+			},
+			function(data,status){
+			 alert("更新成功");
+			});
 			
 		});
 	});

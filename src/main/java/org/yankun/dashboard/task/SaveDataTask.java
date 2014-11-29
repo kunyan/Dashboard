@@ -35,9 +35,6 @@ public class SaveDataTask {
 	@Scheduled(cron = "0 0 * * * *")  
     public void testJob() {  
 		Weather weather = weatherService.getWeather();
-		if (!this.isSunExsits(weather)) {
-			return;
-		}
 		
 		Calendar now = Calendar.getInstance();
 		int hour = now.get(Calendar.HOUR_OF_DAY);
@@ -52,20 +49,22 @@ public class SaveDataTask {
         data.setUsed(this.getUsed(weather));
 
         taskService.saveData(data);
-        logger.info("schedule save data !! ");
+        logger.info("power:" + data.getPower() + ", used:" + data.getUsed() + ",schedule save data !! ");
     }
 	
-	private boolean isSunExsits(Weather weather) {
-		return new Date().after(weather.getSunRiseTime()) && new Date().before(weather.getSunDownTime());
-	}
 	
 	private double getUsed(Weather weather) {
-		int seconds = DateTime.now().getMinuteOfHour() * 60;
-		long msStartDiff = new Date().getTime() - weather.getSunRiseTime().getTime();
-		long msEndDiff = weather.getSunDownTime().getTime() - new Date().getTime();
-		
-		if (msStartDiff > 0 && msEndDiff < 0) {
-			return (double)seconds * (3 / 60 / 60);
+		if (new Date().after(weather.getSunRiseTime()) && new Date().before(weather.getSunDownTime())) {
+			return 3;
+		} else {
+			
+			Calendar sunDown = Calendar.getInstance();
+			sunDown.setTime(weather.getSunDownTime());
+			if (DateTime.now().minusHours(1).hourOfDay().get() == sunDown.get(Calendar.HOUR_OF_DAY)) {
+				System.err.println(" Test :::: " +sunDown.get(Calendar.MINUTE));
+				return (double)(Math.round(sunDown.get(Calendar.MINUTE) * 0.05 *100)/100.0);
+			}
+			
 		}
 		return 0;
 	}

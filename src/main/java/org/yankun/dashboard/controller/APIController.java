@@ -1,6 +1,5 @@
 package org.yankun.dashboard.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.yankun.dashboard.model.Data;
-import org.yankun.dashboard.model.User;
 import org.yankun.dashboard.model.setting.SunPowerData;
 import org.yankun.dashboard.model.weather.Weather;
 import org.yankun.dashboard.service.DataService;
@@ -27,18 +25,9 @@ public class APIController {
 	
 	@Autowired
 	private DataService dataService;
-
-	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public User getUser() {		
-		User user = new User();
-		user.setUsername("Yankun");
-		user.setPassword("123432");
-		return user;
-	}
 	
 	@RequestMapping(value = "/weather", method = RequestMethod.GET)
 	public Weather getWeather() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Weather weather = weatherService.getWeather();
 		return weather;
 	}
@@ -57,11 +46,11 @@ public class APIController {
 		
 		Data lastMonthTotal = dataService.getSumDataByDatePeriod(
 				DateUtils.getLastMonthFirstDay(),
-				DateUtils.getThisMonthFirstDay());
+				DateUtils.getLastMonthLastDay());
 		
 		Data lastWeekTotal = dataService.getSumDataByDatePeriod(
 				DateUtils.getLastWeekFirstDay(),
-				DateUtils.getThisWeekFirstDay());
+				DateUtils.getLastWeekLastDay());
 		
 		Data yesterdayTotal = dataService.getSumDataByDatePeriod(
 				DateUtils.getYesterday(),
